@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 安全问题
+    url: https://github.com/ZiqiangStudio/.github/security/advisories/new
+    about: 不要公开提交安全漏洞、密钥或个人数据
