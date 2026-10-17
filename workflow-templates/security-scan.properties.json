@@ -1,0 +1,6 @@
+{
+  "name": "Ziqiang security scan",
+  "description": "Run the organization-standard secret, dependency, and filesystem scan.",
+  "iconName": "shield",
+  "categories": ["Security"]
+}
