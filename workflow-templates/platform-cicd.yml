@@ -47,6 +47,7 @@ jobs:
       id-token: write
 
   project:
+    if: ${{ always() }}
     needs: deploy
     uses: ZiqiangStudio/zq-platform/.github/workflows/reusable-project-sync.yml@main
     with:
