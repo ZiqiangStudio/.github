@@ -1,0 +1,59 @@
+name: Ziqiang Studio CI/CD
+
+on:
+  pull_request:
+  push:
+    branches: [$default-branch]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+
+      - name: Run project tests
+        run: |
+          echo '请替换为项目测试命令'
+          exit 1
+
+  deploy:
+    needs: test
+    uses: ZiqiangStudio/zq-platform/.github/workflows/reusable-container.yml@main
+    with:
+      images: >-
+        [{"name":"default","image":"registry.cn-hangzhou.aliyuncs.com/ziqiang_studio/REPLACE_ME"}]
+      registry: registry.cn-hangzhou.aliyuncs.com
+      deploy: true
+      environment: REPLACE_ME
+      deploy-script: .platform/deploy.sh
+    secrets:
+      registry_username: ${{ secrets.DOCKER_USERNAME }}
+      registry_password: ${{ secrets.DOCKER_PASSWORD }}
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+  project:
+    needs: deploy
+    uses: ZiqiangStudio/zq-platform/.github/workflows/reusable-project-sync.yml@main
+    with:
+      environment: REPLACE_ME
+      server: REPLACE_ME
+      state: ${{ needs.deploy.result == 'success' && '成功' || '失败' }}
+      image-digest: ${{ needs.deploy.outputs.image-digest }}
+    permissions:
+      contents: read
+      deployments: write
