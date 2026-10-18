@@ -13,6 +13,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  pr-title:
+    uses: ZiqiangStudio/zq-platform/.github/workflows/reusable-pr-title.yml@main
+
   test:
     runs-on: ubuntu-24.04
     steps:
@@ -47,6 +50,7 @@ jobs:
       id-token: write
 
   project:
+    if: ${{ always() }}
     needs: deploy
     uses: ZiqiangStudio/zq-platform/.github/workflows/reusable-project-sync.yml@main
     with:
