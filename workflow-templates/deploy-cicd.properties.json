@@ -1,0 +1,6 @@
+{
+  "name": "Ziqiang Studio CI/CD",
+  "description": "使用 zq-deploy 统一构建与全自动上线。只需填写业务域名与端口，内置全套安全与命名规范校验。",
+  "iconName": "octicon rocket",
+  "categories": ["Deployment"]
+}

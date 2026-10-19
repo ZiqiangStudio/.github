@@ -1,6 +1,0 @@
-{
-  "name": "Ziqiang Studio CI/CD",
-  "description": "使用 zq-platform 统一构建、部署和同步 GitHub Project。复制后只需填写测试命令、镜像和部署参数。",
-  "iconName": "octicon rocket",
-  "categories": ["Deployment"]
-}
